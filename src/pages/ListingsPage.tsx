@@ -21,7 +21,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { IconDownload, IconFilter } from "@tabler/icons-react";
 import { useBooksData } from "@/hooks/useBooksData";
-import Papa from "papaparse";
+import { handleCSVDownload } from "@/lib/utils";
 
 const ListingsPage = () => {
   const { books } = useBooksData();
@@ -47,16 +47,7 @@ const ListingsPage = () => {
       rowSelection,
     },
   });
-  const handleCSVDownload = () => {
-    const csv = Papa.unparse(books);
-    const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
-    const link = document.createElement("a");
-    link.href = URL.createObjectURL(blob);
-    link.download = "edited_books.csv";
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-  };
+
   return (
     <div className="flex flex-col gap-4 p-4">
       <div className="p-3 py-1 flex items-center justify-between">
@@ -66,7 +57,7 @@ const ListingsPage = () => {
             variant="ghost"
             size="icon"
             title="Download CSV"
-            onClick={handleCSVDownload}
+            onClick={() => handleCSVDownload(books)}
           >
             <IconDownload size={16} />
           </Button>
