@@ -12,12 +12,14 @@ export type BooksContextType = {
   books: Book[];
   originalBooks: Book[];
   storeBooks: (books: Book[]) => void;
+  updateBooks: (books: Book[]) => void;
   resetBooks: () => void;
 };
 const defaultBooksContext: BooksContextType = {
   books: [],
   originalBooks: [],
   storeBooks: () => {},
+  updateBooks: () => {},
   resetBooks: () => {},
 };
 

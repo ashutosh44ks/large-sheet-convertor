@@ -31,13 +31,20 @@ import { IconDownload, IconFilter } from "@tabler/icons-react";
 import { useBooksData } from "@/hooks/useBooksData";
 import { handleCSVDownload } from "@/lib/utils";
 import { LucideUndoDot } from "lucide-react";
+import type { Book } from "@/hooks/BooksContext";
 
 const ListingsPage = () => {
-  const { books, resetBooks } = useBooksData();
+  const { books, resetBooks, updateBooks } = useBooksData();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
+  const updateData = (rowIndex: number, columnId: keyof Book, value: unknown) => {
+    const newTableData = [...books];
+    // @ts-ignore
+    newTableData[rowIndex][columnId] = value;
+    updateBooks(newTableData);
+  };
   const table = useReactTable({
     data: books,
     columns,
@@ -54,6 +61,9 @@ const ListingsPage = () => {
       columnFilters,
       columnVisibility,
       rowSelection,
+    },
+    meta: {
+      updateData,
     },
   });
 
@@ -85,11 +95,16 @@ const ListingsPage = () => {
           <PageToolbar>
             <ToolbarSection>
               <span className="text-sm font-medium">
-                Collection of {table.getFilteredRowModel().rows.length.toLocaleString()} books
+                Collection of{" "}
+                {table.getFilteredRowModel().rows.length.toLocaleString()} books
               </span>
               {table.getFilteredSelectedRowModel().rows.length > 0 && (
                 <span className="text-sm text-muted-foreground">
-                  ({table.getFilteredSelectedRowModel().rows.length.toLocaleString()} selected)
+                  (
+                  {table
+                    .getFilteredSelectedRowModel()
+                    .rows.length.toLocaleString()}{" "}
+                  selected)
                 </span>
               )}
             </ToolbarSection>

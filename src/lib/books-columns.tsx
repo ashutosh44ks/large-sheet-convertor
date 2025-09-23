@@ -12,6 +12,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Book } from "@/hooks/BooksContext";
 import { DataTableColumnHeader } from "@/components/data-table-column-header";
+import { EditableCell } from "@/components/data-table-editable-cell";
 
 export const columns: ColumnDef<Book>[] = [
   {
@@ -43,30 +44,35 @@ export const columns: ColumnDef<Book>[] = [
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Title" />
     ),
+    cell: EditableCell,
   },
   {
     accessorKey: "author",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Author" />
     ),
+    cell: EditableCell,
   },
   {
     accessorKey: "genre",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Genre" />
     ),
+    cell: EditableCell,
   },
   {
     accessorKey: "publishedYear",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="Published Year" />
     ),
+    cell: EditableCell,
   },
   {
     accessorKey: "isbn",
     header: ({ column }) => (
       <DataTableColumnHeader column={column} title="ISBN" />
     ),
+    cell: EditableCell,
   },
   {
     id: "actions",

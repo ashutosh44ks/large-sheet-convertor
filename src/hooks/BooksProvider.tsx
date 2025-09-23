@@ -15,8 +15,11 @@ export const BooksProvider = ({ children }: BooksProviderProps) => {
   const resetBooks = () => {
     setBooks(originalBooks);
   };
+  const updateBooks = (updatedBooks: Book[]) => {
+    setBooks(updatedBooks);
+  }
 
-  const contextValue = { books, originalBooks, storeBooks, resetBooks };
+  const contextValue = { books, originalBooks, storeBooks, resetBooks, updateBooks };
 
   return (
     <BooksContext.Provider value={contextValue}>
