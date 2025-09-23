@@ -30,9 +30,10 @@ import { Button } from "@/components/ui/button";
 import { IconDownload, IconFilter } from "@tabler/icons-react";
 import { useBooksData } from "@/hooks/useBooksData";
 import { handleCSVDownload } from "@/lib/utils";
+import { LucideUndoDot } from "lucide-react";
 
 const ListingsPage = () => {
-  const { books } = useBooksData();
+  const { books, resetBooks } = useBooksData();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
@@ -101,6 +102,10 @@ const ListingsPage = () => {
                   table.getColumn("title")?.setFilterValue(event.target.value)
                 }
               />
+              <Button variant="outline" size="sm" onClick={resetBooks}>
+                <LucideUndoDot size={16} />
+                Reset changes
+              </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="outline" size="sm" className="gap-2">
