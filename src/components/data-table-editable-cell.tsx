@@ -12,7 +12,7 @@ export const EditableCell = ({
   const [value, setValue] = useState(initialValue);
 
   const onBlur = () => {
-    table.options.meta?.updateData(row.index, column.id, value);
+    table.options.meta?.updateData(row.index, column.id as keyof Book, value);
   };
 
   useEffect(() => {
