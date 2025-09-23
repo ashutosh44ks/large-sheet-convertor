@@ -36,6 +36,7 @@ export const columns: ColumnDef<Book>[] = [
     ),
     enableSorting: false,
     enableColumnFilter: false,
+    enableHiding: false,
   },
   {
     accessorKey: "title",
@@ -83,5 +84,6 @@ export const columns: ColumnDef<Book>[] = [
         </DropdownMenu>
       );
     },
+    enableHiding: false,
   },
 ];

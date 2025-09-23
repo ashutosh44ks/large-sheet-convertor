@@ -1,6 +1,14 @@
 import { DataTable } from "@/components/data-table";
 import { columns } from "@/lib/books-columns";
 import { Input } from "@/components/ui/input";
+import { PageHeader } from "@/components/page-header";
+import {
+  PageToolbar,
+  ToolbarSection,
+  ToolbarActions,
+} from "@/components/page-toolbar";
+import { PageContainer, PageSection } from "@/components/page-container";
+import { NoDataState, NoSearchResultsState } from "@/components/empty-state";
 import { useState } from "react";
 import {
   getCoreRowModel,
@@ -48,59 +56,90 @@ const ListingsPage = () => {
     },
   });
 
+  const searchValue =
+    (table.getColumn("title")?.getFilterValue() as string) ?? "";
+  const hasData = books.length > 0;
+  const hasFilteredData = table.getFilteredRowModel().rows.length > 0;
+
   return (
-    <div className="flex flex-col gap-4 p-4">
-      <div className="p-3 py-1 flex items-center justify-between">
-        <div className="flex items-center gap-2">
-          <h2 className="font-semibold">Books Listing</h2>
-          <Button
-            variant="ghost"
-            size="icon"
-            title="Download CSV"
-            onClick={() => handleCSVDownload(books)}
-          >
-            <IconDownload size={16} />
-          </Button>
-        </div>
-        <div className="flex items-center gap-2">
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="icon" title="Filter books">
-                <IconFilter size={16} />
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              {table
-                .getAllColumns()
-                .filter((column) => column.getCanHide())
-                .map((column) => {
-                  return (
-                    <DropdownMenuCheckboxItem
-                      key={column.id}
-                      className="capitalize"
-                      checked={column.getIsVisible()}
-                      onCheckedChange={(value) =>
-                        column.toggleVisibility(!!value)
-                      }
-                    >
-                      {column.id}
-                    </DropdownMenuCheckboxItem>
-                  );
-                })}
-            </DropdownMenuContent>
-          </DropdownMenu>
-          <Input
-            placeholder="Search by title..."
-            className="max-w-64 bg-white"
-            value={(table.getColumn("title")?.getFilterValue() as string) ?? ""}
-            onChange={(event) =>
-              table.getColumn("title")?.setFilterValue(event.target.value)
-            }
-          />
-        </div>
-      </div>
-      <DataTable columns={columns} table={table} />
-    </div>
+    <PageContainer>
+      <PageHeader
+        title="Books Listing"
+        description="Manage and view your book collection"
+        actions={
+          hasData && (
+            <Button variant="outline" onClick={() => handleCSVDownload(books)}>
+              <IconDownload size={16} />
+              Export CSV
+            </Button>
+          )
+        }
+      />
+      {!hasData ? (
+        <PageSection>
+          <NoDataState />
+        </PageSection>
+      ) : (
+        <>
+          <PageToolbar>
+            <ToolbarSection>
+              <span className="text-sm font-medium">
+                Collection of {table.getFilteredRowModel().rows.length.toLocaleString()} books
+              </span>
+              {table.getFilteredSelectedRowModel().rows.length > 0 && (
+                <span className="text-sm text-muted-foreground">
+                  ({table.getFilteredSelectedRowModel().rows.length.toLocaleString()} selected)
+                </span>
+              )}
+            </ToolbarSection>
+            <ToolbarActions>
+              <Input
+                placeholder="Search by title..."
+                className="w-full sm:w-64 bg-background"
+                value={searchValue}
+                onChange={(event) =>
+                  table.getColumn("title")?.setFilterValue(event.target.value)
+                }
+              />
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="outline" size="sm" className="gap-2">
+                    <IconFilter size={16} />
+                    Columns
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  {table
+                    .getAllColumns()
+                    .filter((column) => column.getCanHide())
+                    .map((column) => {
+                      return (
+                        <DropdownMenuCheckboxItem
+                          key={column.id}
+                          className="capitalize"
+                          checked={column.getIsVisible()}
+                          onCheckedChange={(value) =>
+                            column.toggleVisibility(!!value)
+                          }
+                        >
+                          {column.columnDef.header as string}
+                        </DropdownMenuCheckboxItem>
+                      );
+                    })}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </ToolbarActions>
+          </PageToolbar>
+          <PageSection>
+            {!hasFilteredData && searchValue ? (
+              <NoSearchResultsState searchTerm={searchValue} />
+            ) : (
+              <DataTable columns={columns} table={table} />
+            )}
+          </PageSection>
+        </>
+      )}
+    </PageContainer>
   );
 };
 
