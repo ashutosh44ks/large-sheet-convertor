@@ -122,7 +122,7 @@ const ListingsPage = () => {
                             column.toggleVisibility(!!value)
                           }
                         >
-                          {column.columnDef.header as string}
+                          {column.id}
                         </DropdownMenuCheckboxItem>
                       );
                     })}

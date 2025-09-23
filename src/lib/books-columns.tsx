@@ -11,6 +11,7 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Checkbox } from "@/components/ui/checkbox";
 import type { Book } from "@/hooks/BooksContext";
+import { DataTableColumnHeader } from "@/components/data-table-column-header";
 
 export const columns: ColumnDef<Book>[] = [
   {
@@ -35,28 +36,37 @@ export const columns: ColumnDef<Book>[] = [
       />
     ),
     enableSorting: false,
-    enableColumnFilter: false,
     enableHiding: false,
   },
   {
     accessorKey: "title",
-    header: "Title",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Title" />
+    ),
   },
   {
     accessorKey: "author",
-    header: "Author",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Author" />
+    ),
   },
   {
     accessorKey: "genre",
-    header: "Genre",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Genre" />
+    ),
   },
   {
     accessorKey: "publishedYear",
-    header: "Published Year",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="Published Year" />
+    ),
   },
   {
     accessorKey: "isbn",
-    header: "ISBN",
+    header: ({ column }) => (
+      <DataTableColumnHeader column={column} title="ISBN" />
+    ),
   },
   {
     id: "actions",
