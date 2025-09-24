@@ -88,11 +88,11 @@ export function DataTable<TData, TValue>({
         <div className="text-sm text-muted-foreground">
           {table.getFilteredSelectedRowModel().rows.length > 0 ? (
             <>
-              {table.getFilteredSelectedRowModel().rows.length} of{" "}
-              {table.getFilteredRowModel().rows.length} row(s) selected
+              {table.getFilteredSelectedRowModel().rows.length.toLocaleString()} of{" "}
+              {table.getFilteredRowModel().rows.length.toLocaleString()} row(s) selected
             </>
           ) : (
-            <>Showing {table.getRowModel().rows.length} of {table.getFilteredRowModel().rows.length} entries</>
+            <>Showing {table.getRowModel().rows.length.toLocaleString()} of {table.getFilteredRowModel().rows.length.toLocaleString()} entries</>
           )}
         </div>
         <div className="flex items-center gap-2">

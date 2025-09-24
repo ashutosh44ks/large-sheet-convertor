@@ -34,12 +34,17 @@ import { LucideUndoDot } from "lucide-react";
 import type { Book } from "@/hooks/BooksContext";
 
 const ListingsPage = () => {
-  const { books, resetBooks, updateBooks, isRowModified, modifiedRowIndices } = useBooksData();
+  const { books, resetBooks, updateBooks, isRowModified, modifiedRowIndices } =
+    useBooksData();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
-  const [rowSelection, setRowSelection] = useState({});
-  const updateData = (rowIndex: number, columnId: keyof Book, value: unknown) => {
+  // const [rowSelection, setRowSelection] = useState({});
+  const updateData = (
+    rowIndex: number,
+    columnId: keyof Book,
+    value: unknown
+  ) => {
     const newTableData = [...books];
     // @ts-expect-error - We know the assignment is valid for Book properties
     newTableData[rowIndex][columnId] = value;
@@ -55,12 +60,12 @@ const ListingsPage = () => {
     onColumnFiltersChange: setColumnFilters,
     getFilteredRowModel: getFilteredRowModel(),
     onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+    // onRowSelectionChange: setRowSelection,
     state: {
       sorting,
       columnFilters,
       columnVisibility,
-      rowSelection,
+      // rowSelection,
     },
     meta: {
       updateData,
@@ -115,17 +120,9 @@ const ListingsPage = () => {
               )}
             </ToolbarSection>
             <ToolbarActions>
-              <Input
-                placeholder="Search by title..."
-                className="w-full sm:w-64 bg-background"
-                value={searchValue}
-                onChange={(event) =>
-                  table.getColumn("title")?.setFilterValue(event.target.value)
-                }
-              />
               <Button variant="outline" size="sm" onClick={resetBooks}>
                 <LucideUndoDot size={16} />
-                Reset changes
+                Reset all changes
               </Button>
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
@@ -154,6 +151,14 @@ const ListingsPage = () => {
                     })}
                 </DropdownMenuContent>
               </DropdownMenu>
+              <Input
+                placeholder="Search by title..."
+                className="w-full sm:w-64 bg-background"
+                value={searchValue}
+                onChange={(event) =>
+                  table.getColumn("title")?.setFilterValue(event.target.value)
+                }
+              />
             </ToolbarActions>
           </PageToolbar>
           <PageSection>
