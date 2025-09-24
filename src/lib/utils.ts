@@ -7,13 +7,18 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-export const extractCSVData = async (file: File): Promise<Book[]> => {
+export const extractCSVData = async (file: File): Promise<{ data: Book[]; timeTaken: number }> => {
   return new Promise((resolve, reject) => {
+    const startTime = performance.now();
     Papa.parse<Book>(file, {
       header: true,
       skipEmptyLines: true,
       complete: (results) => {
-        resolve(results.data);
+        const endTime = performance.now();
+        resolve({
+          data: results.data,
+          timeTaken: endTime - startTime,
+        });
       },
       error: (error: unknown) => {
         reject(error);

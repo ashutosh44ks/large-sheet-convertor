@@ -26,8 +26,14 @@ Deployed on Vercel: [Live Demo](https://large-sheet-convertor.vercel.app)
 
 ## Generate Sample CSV
 
-- To generate a sample CSV file, use the Python script `src/lib/csv-gen.py`
-- There is a sample file already present with 10,000 rows at `src/lib/books.csv`
+To generate a sample CSV file:
+
+- Use the Python script at `src/lib/csv-gen.py`.
+- A sample CSV with 10,000 rows is available at `src/lib/books.csv`.
+- You can also upload your own CSV file. Ensure it follows this format:
+    ```
+    title,author,genre,publishedYear,isbn
+    ```
 
 ## Getting Started
 

@@ -82,7 +82,7 @@ const ListingsPage = () => {
     <PageContainer>
       <PageHeader
         title="Books Listing"
-        description="Manage and view your book collection"
+        description="Efficiently manage and view your large collections of books"
         actions={
           hasData && (
             <Button variant="outline" onClick={() => handleCSVDownload(books)}>
