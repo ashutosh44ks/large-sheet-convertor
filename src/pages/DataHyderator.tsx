@@ -1,5 +1,6 @@
 import FileInput from "@/components/file-input";
 import { useBooksData } from "@/hooks/useBooksData";
+import { ROUTES } from "@/lib/constants";
 import { extractCSVData } from "@/lib/utils";
 import { useState } from "react";
 import { useNavigate } from "react-router";
@@ -21,7 +22,7 @@ const DataHyderator = () => {
         storeBooks(extractedData);
         // store the uploaded data to context/redux
         setIsPending(false);
-        navigate("/listings");
+        navigate(ROUTES.LISTINGS);
       }
     }
   };

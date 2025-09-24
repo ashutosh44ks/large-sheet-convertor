@@ -1,6 +1,7 @@
 import { Outlet } from "react-router";
 import { ModeToggle } from "./mode-toggle";
 import { MainNavigation } from "./navigation";
+import { SOCIAL } from "@/lib/constants";
 
 const Layout = () => {
   return (
@@ -31,7 +32,7 @@ const Layout = () => {
             <div className="flex items-center gap-4 text-sm text-muted-foreground">
               <span>Made with React & Vite</span>
               <span>•</span>
-              <a href="https://www.linkedin.com/in/ashutosh44ks">@ashutosh44ks</a>
+              <a href={SOCIAL}>@ashutosh44ks</a>
             </div>
           </div>
         </div>

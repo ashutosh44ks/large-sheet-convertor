@@ -5,6 +5,7 @@ import ListingsPage from "./pages/ListingsPage";
 import { BooksProvider } from "./hooks/BooksProvider";
 import Error from "./pages/Error";
 import DataHyderator from "./pages/DataHyderator";
+import { ROUTES } from "./lib/constants";
 
 const router = createBrowserRouter([
   {
@@ -12,11 +13,11 @@ const router = createBrowserRouter([
     element: <Layout />,
     children: [
       {
-        path: "/",
+        path: ROUTES.UPLOAD,
         element: <DataHyderator />,
       },
       {
-        path: "/listings",
+        path: ROUTES.LISTINGS,
         element: <ListingsPage />,
       },
     ],
