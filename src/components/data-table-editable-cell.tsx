@@ -1,4 +1,4 @@
-import { type CellContext,  } from "@tanstack/react-table";
+import { type CellContext } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
 import type { Book } from "@/hooks/BooksContext";
 

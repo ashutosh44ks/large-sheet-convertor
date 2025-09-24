@@ -34,14 +34,14 @@ import { LucideUndoDot } from "lucide-react";
 import type { Book } from "@/hooks/BooksContext";
 
 const ListingsPage = () => {
-  const { books, resetBooks, updateBooks } = useBooksData();
+  const { books, resetBooks, updateBooks, isRowModified, modifiedRowIndices } = useBooksData();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   const [rowSelection, setRowSelection] = useState({});
   const updateData = (rowIndex: number, columnId: keyof Book, value: unknown) => {
     const newTableData = [...books];
-    // @ts-ignore
+    // @ts-expect-error - We know the assignment is valid for Book properties
     newTableData[rowIndex][columnId] = value;
     updateBooks(newTableData);
   };
@@ -64,6 +64,7 @@ const ListingsPage = () => {
     },
     meta: {
       updateData,
+      isRowModified,
     },
   });
 
@@ -105,6 +106,11 @@ const ListingsPage = () => {
                     .getFilteredSelectedRowModel()
                     .rows.length.toLocaleString()}{" "}
                   selected)
+                </span>
+              )}
+              {modifiedRowIndices.size > 0 && (
+                <span className="text-sm text-amber-600 dark:text-amber-400 font-medium">
+                  ({modifiedRowIndices.size} modified)
                 </span>
               )}
             </ToolbarSection>

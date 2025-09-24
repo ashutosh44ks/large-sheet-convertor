@@ -11,16 +11,20 @@ export interface Book {
 export type BooksContextType = {
   books: Book[];
   originalBooks: Book[];
+  modifiedRowIndices: Set<number>;
   storeBooks: (books: Book[]) => void;
   updateBooks: (books: Book[]) => void;
   resetBooks: () => void;
+  isRowModified: (index: number) => boolean;
 };
 const defaultBooksContext: BooksContextType = {
   books: [],
   originalBooks: [],
+  modifiedRowIndices: new Set(),
   storeBooks: () => {},
   updateBooks: () => {},
   resetBooks: () => {},
+  isRowModified: () => false,
 };
 
 // Create the context with an initial value of undefined.
