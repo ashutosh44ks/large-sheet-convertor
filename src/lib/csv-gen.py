@@ -36,7 +36,7 @@ def generate_book_data(num_books):
 
 if __name__ == '__main__':
     # Adjust this value to change the number of books generated
-    NUMBER_OF_BOOKS = 10000
+    NUMBER_OF_BOOKS = 100000
 
     print(f"Generating {NUMBER_OF_BOOKS} book entries...")
     book_data = generate_book_data(NUMBER_OF_BOOKS)

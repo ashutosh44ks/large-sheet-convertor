@@ -11,19 +11,6 @@ A performant web application for viewing, editing, and managing large CSV datase
 - **Papaparse** - CSV parsing
 - **Vite** - Build tool and dev server
 
-## Getting Started
-
-```bash
-# Install dependencies
-npm install
-
-# Start development server
-npm run dev
-
-# Build for production
-npm run build
-```
-
 ## Features
 
 - CSV file upload and parsing
@@ -36,3 +23,21 @@ npm run build
 ## Deployment
 
 Deployed on Vercel: [Live Demo](https://large-sheet-convertor.vercel.app)
+
+## Generate Sample CSV
+
+- To generate a sample CSV file, use the Python script `src/lib/csv-gen.py`
+- There is a sample file already present with 10,000 rows at `src/lib/books.csv`
+
+## Getting Started
+
+```bash
+# Install dependencies
+npm install
+
+# Start development server
+npm run dev
+
+# Build for production
+npm run build
+```
