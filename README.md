@@ -28,10 +28,10 @@ Deployed on Vercel: [Live Demo](https://large-sheet-convertor.vercel.app)
 
 To generate a sample CSV file:
 
-- Use the Python script at `src/lib/csv-gen.py`.
+- Use the Python script at `src/lib/csv-gen.py`
 - A sample CSV with 10,000 rows is available at `src/lib/books.csv`.
-- Additional samples are available in the app (Books, Inventory, Contacts, Employees).
 - You can upload any CSV structure with headers. The table columns are generated dynamically from the uploaded headers.
+- Additional small sample files are available in the app (Books, Inventory, Contacts, Employees) to test the dynamic-ness of the input structure.
 
 ## Getting Started
 

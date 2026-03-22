@@ -9,7 +9,7 @@ import {
 } from "@/components/page-toolbar";
 import { PageContainer, PageSection } from "@/components/page-container";
 import { NoDataState, NoSearchResultsState } from "@/components/empty-state";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import {
   getCoreRowModel,
   useReactTable,
@@ -47,7 +47,10 @@ const ListingsPage = () => {
   // const [rowSelection, setRowSelection] = useState({});
   
   // Generate columns dynamically from columnNames
-  const columns = generateColumnsFromHeaders(columnNames);
+  const columns = useMemo(
+    () => generateColumnsFromHeaders(columnNames),
+    [columnNames]
+  );
   const firstColumnName = columnNames[0] || "title"; // Fallback to "title" if no columns
   
   const updateData = (
@@ -55,13 +58,22 @@ const ListingsPage = () => {
     columnId: string | number,
     value: unknown
   ) => {
+    const columnKey = String(columnId);
+    const nextValue = String(value);
+
+    // Avoid unnecessary updates if the value hasn't changed
+    if (records[rowIndex]?.[columnKey] === nextValue) {
+      return;
+    }
+
     const newTableData = [...records];
-    newTableData[rowIndex][String(columnId)] = String(value);
+    newTableData[rowIndex][columnKey] = nextValue;
     updateRecords(newTableData);
   };
   const table = useReactTable({
     data: records,
     columns,
+    autoResetPageIndex: false,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     onSortingChange: setSorting,
