@@ -20,9 +20,9 @@ interface NavItem {
 
 const navItems: NavItem[] = [
   {
-    title: "Books",
+    title: "Data",
     href: "/listings",
-    description: "Manage your book collection",
+    description: "Manage your imported records",
     icon: <IconDatabase size={16} />,
     separator: true,
   },

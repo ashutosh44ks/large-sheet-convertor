@@ -30,10 +30,8 @@ To generate a sample CSV file:
 
 - Use the Python script at `src/lib/csv-gen.py`.
 - A sample CSV with 10,000 rows is available at `src/lib/books.csv`.
-- You can also upload your own CSV file. Ensure it follows this format:
-    ```
-    title,author,genre,publishedYear,isbn
-    ```
+- Additional samples are available in the app (Books, Inventory, Contacts, Employees).
+- You can upload any CSV structure with headers. The table columns are generated dynamically from the uploaded headers.
 
 ## Getting Started
 

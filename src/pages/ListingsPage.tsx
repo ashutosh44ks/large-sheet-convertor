@@ -1,5 +1,5 @@
 import { DataTable } from "@/components/data-table";
-import { columns } from "@/lib/books-columns";
+import { generateColumnsFromHeaders } from "@/lib/table-columns";
 import { Input } from "@/components/ui/input";
 import { PageHeader } from "@/components/page-header";
 import {
@@ -28,30 +28,39 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Button } from "@/components/ui/button";
 import { IconDownload, IconFilter } from "@tabler/icons-react";
-import { useBooksData } from "@/hooks/useBooksData";
+import { useDataContext } from "@/hooks/useDataContext";
 import { handleCSVDownload } from "@/lib/utils";
 import { LucideUndoDot } from "lucide-react";
-import type { Book } from "@/hooks/BooksContext";
 
 const ListingsPage = () => {
-  const { books, resetBooks, updateBooks, isRowModified, modifiedRowIndices } =
-    useBooksData();
+  const {
+    records,
+    columnNames,
+    resetRecords,
+    updateRecords,
+    isRowModified,
+    modifiedRowIndices,
+  } = useDataContext();
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
   const [columnVisibility, setColumnVisibility] = useState<VisibilityState>({});
   // const [rowSelection, setRowSelection] = useState({});
+  
+  // Generate columns dynamically from columnNames
+  const columns = generateColumnsFromHeaders(columnNames);
+  const firstColumnName = columnNames[0] || "title"; // Fallback to "title" if no columns
+  
   const updateData = (
     rowIndex: number,
-    columnId: keyof Book,
+    columnId: string | number,
     value: unknown
   ) => {
-    const newTableData = [...books];
-    // @ts-expect-error - We know the assignment is valid for Book properties
-    newTableData[rowIndex][columnId] = value;
-    updateBooks(newTableData);
+    const newTableData = [...records];
+    newTableData[rowIndex][String(columnId)] = String(value);
+    updateRecords(newTableData);
   };
   const table = useReactTable({
-    data: books,
+    data: records,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
@@ -74,18 +83,18 @@ const ListingsPage = () => {
   });
 
   const searchValue =
-    (table.getColumn("title")?.getFilterValue() as string) ?? "";
-  const hasData = books.length > 0;
+    (table.getColumn(firstColumnName)?.getFilterValue() as string) ?? "";
+  const hasData = records.length > 0;
   const hasFilteredData = table.getFilteredRowModel().rows.length > 0;
 
   return (
     <PageContainer>
       <PageHeader
-        title="Books Listing"
-        description="Efficiently manage and view your large collections of books"
+        title="Data Listing"
+        description="Efficiently manage and view your large collections of data"
         actions={
           hasData && (
-            <Button variant="outline" onClick={() => handleCSVDownload(books)}>
+            <Button variant="outline" onClick={() => handleCSVDownload(records)}>
               <IconDownload size={16} />
               Export CSV
             </Button>
@@ -102,7 +111,7 @@ const ListingsPage = () => {
             <ToolbarSection>
               <span className="text-sm font-medium">
                 Collection of{" "}
-                {table.getFilteredRowModel().rows.length.toLocaleString()} books
+                {table.getFilteredRowModel().rows.length.toLocaleString()} records
               </span>
               {table.getFilteredSelectedRowModel().rows.length > 0 && (
                 <span className="text-sm text-muted-foreground">
@@ -120,7 +129,7 @@ const ListingsPage = () => {
               )}
             </ToolbarSection>
             <ToolbarActions>
-              <Button variant="outline" size="sm" onClick={resetBooks}>
+              <Button variant="outline" size="sm" onClick={resetRecords}>
                 <LucideUndoDot size={16} />
                 Reset all changes
               </Button>
@@ -152,11 +161,11 @@ const ListingsPage = () => {
                 </DropdownMenuContent>
               </DropdownMenu>
               <Input
-                placeholder="Search by title..."
+                placeholder={`Search by ${firstColumnName}...`}
                 className="w-full sm:w-64 bg-background"
                 value={searchValue}
                 onChange={(event) =>
-                  table.getColumn("title")?.setFilterValue(event.target.value)
+                  table.getColumn(firstColumnName)?.setFilterValue(event.target.value)
                 }
               />
             </ToolbarActions>

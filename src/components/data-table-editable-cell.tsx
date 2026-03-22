@@ -1,18 +1,18 @@
 import { type CellContext } from "@tanstack/react-table";
 import { useEffect, useState } from "react";
-import type { Book } from "@/hooks/BooksContext";
+import type { DataRecord } from "@/hooks/DataContext";
 
 export const EditableCell = ({
   getValue,
   row,
   column,
   table,
-}: CellContext<Book, unknown>) => {
+}: CellContext<DataRecord, unknown>) => {
   const initialValue = getValue();
   const [value, setValue] = useState(initialValue);
 
   const onBlur = () => {
-    table.options.meta?.updateData(row.index, column.id as keyof Book, value);
+    table.options.meta?.updateData(row.index, column.id, value);
   };
 
   useEffect(() => {

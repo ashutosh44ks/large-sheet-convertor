@@ -39,10 +39,10 @@ export function NoDataState() {
   return (
     <EmptyState
       icon={<IconFileText size={48} />}
-      title="No books found"
-      description="It looks like you don't have any books in your collection yet. Import some data to get started."
+      title="No data found"
+      description="It looks like you do not have any imported records yet. Import some data to get started."
       action={{
-        label: "Import Books",
+        label: "Import Data",
         onClick: () => navigate("/"),
       }}
     />
@@ -54,7 +54,7 @@ export function NoSearchResultsState({ searchTerm }: { searchTerm: string }) {
     <EmptyState
       icon={<IconDatabase size={48} />}
       title="No results found"
-      description={`No books match your search for "${searchTerm}". Try adjusting your search terms or filters.`}
+      description={`No records match your search for "${searchTerm}". Try adjusting your search terms or filters.`}
     />
   );
 }

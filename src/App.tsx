@@ -2,7 +2,7 @@ import { createBrowserRouter, RouterProvider } from "react-router";
 import { ThemeProvider } from "./components/theme-provider";
 import Layout from "./components/layout";
 import ListingsPage from "./pages/ListingsPage";
-import { BooksProvider } from "./hooks/BooksProvider";
+import { DataProvider } from "./hooks/DataProvider";
 import Error from "./pages/Error";
 import DataHyderator from "./pages/DataHyderator";
 import { ROUTES } from "./lib/constants";
@@ -27,9 +27,9 @@ const router = createBrowserRouter([
 function App() {
   return (
     <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
-      <BooksProvider>
+      <DataProvider>
         <RouterProvider router={router} />
-      </BooksProvider>
+      </DataProvider>
     </ThemeProvider>
   );
 }
